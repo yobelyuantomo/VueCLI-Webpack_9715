@@ -51,10 +51,10 @@
                    </span>
                 </template>
                 <template v-slot:[`item.actions`]="{ item }">
-                     <v-icon small class="mr-2" @click="dialog=true, editItem(item)" color="blue">
+                     <v-icon class="mr-2" @click="dialog=true, editItem(item)" color="blue">
                             mdi-pencil
                     </v-icon>
-                     <v-icon small class="mr-2" @click="confirmDeleteDialog(item)" color="red">
+                     <v-icon class="mr-2" @click="confirmDeleteDialog(item)" color="red">
                             mdi-delete
                     </v-icon>
                 </template>
@@ -68,7 +68,36 @@
                 <v-card-title>
                         <span class="headline">Finished To Do</span>
                 </v-card-title>
-                <v-data-table :headers="headers" :items="todosFinished" :search="search">
+                <v-data-table :headers="headers2" :items="todosFinished" :search="search">
+                    <template v-slot:[`item.priority`]="{ item }">
+                   <span v-if="item.priority == 'Penting'">
+                        <v-chip
+                            class="ma-2"
+                            color="red"
+                            label
+                            outlined>
+                                {{item.priority}}
+                        </v-chip>
+                   </span>
+                   <span v-else-if="item.priority == 'Tidak penting'">
+                        <v-chip
+                            class="ma-2"
+                            color="green"
+                            label
+                            outlined>
+                                {{item.priority}}
+                        </v-chip>
+                   </span>
+                    <span v-else-if="item.priority == 'Biasa'">
+                        <v-chip
+                            class="ma-2"
+                            color="blue"
+                            label
+                            outlined>
+                                {{item.priority}}
+                        </v-chip>
+                   </span>
+                </template>
                 </v-data-table>
                 <v-card-actions>
                     <v-spacer></v-spacer>
@@ -157,6 +186,16 @@
                     { text: "Priority", value: "priority" },
                     { text: "Note", value: "note" },
                     { text: "Actions", value: "actions" },
+                ],
+                headers2: [
+                    {
+                        text: "Task",
+                        align: "start",
+                        sortable: true,
+                        value: "task",
+                    },
+                    { text: "Priority", value: "priority" },
+                    { text: "Note", value: "note" },
                 ],
                 todos: [
                     {
